@@ -60,16 +60,21 @@ Una volta che l'esercitazione sia completata con successo, dovreste avere questo
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
 Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
 
-## La struttura 'Image' ##
+## La classe 'Image' ##
 
-Nel file src/image.h trovate una struttura di base per le immagini. Questa struct `Image` contiene i metadati come width, 
-height e il numero dei canali. I dati dell'immagine vera e propria sono contenuti in un array di float. 
+Nel file src/image.h trovate una classe di base per le immagini. Questa class `Image` contiene i metadati come width, 
+height e il numero dei canali. I dati dell'immagine vera e propria sono contenuti in un std::vector di float. Questo 
+garantisce il principio RAII. 
 La struttura ha questo aspetto:
 
-    struct Image
-    {
-        int h,w,c;
-        float *data;
+    class Image
+        {
+        
+        public:
+            int w=0;
+            int h=0;
+            int c=0;
+            std::vector<float> data;
         .......
     };
 
@@ -177,7 +182,7 @@ L'immagine del cane senza il canale rosso dovrebbe essere così:
 
 Qualche volta avrete il bisogno di copiare una immagine. Per farlo dovete creare una nuova immagine della stessa 
 dimensione e travasare i dati. Lo potete fare assegnando sistematicamente un pixel da una immagine all'altra usando 
-dei cicli, o usando la funzione di libreria `memcpy`.
+dei cicli, o usando la funzione di libreria `std::copy`.
 
 Ora implementate la funzione `void copy_image(Image& to, const Image& from)` contenuta in `src/access_image.cpp`.
 
