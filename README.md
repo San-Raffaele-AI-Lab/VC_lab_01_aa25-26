@@ -1,19 +1,21 @@
 ### Disclamer: This lab is originally based on the CSE 576 homework that you can find here: ###
 #### https://github.com/holynski/cse576_sp20_hw1 ####
+and was subsequentally updated and expanded in the AI-Lab course at Sapienza University of Rome. 
+The current incarnation (for the course _Visione Computazionale_ at San Raffaele University) brings other updates, 
+in particular the convertion to a newer C++ standard.
 
-# Esercitazione 1 di Visione Computazionale e Sistemi Cognitivi #
+# Esercitazione 1 di AI-Lab #
 
 ## Setup generale ##
 Questo è il setup da seguire per impostare il repo sulla vostra macchina personale. 
-Più sotto trovate le istruzioni per impostarlo sulla macchina virtuale di laboratorio. 
 
 **NB: è noevolmente più semplice impostare tutti i tool e le librerie necessarie su una distribuzione linux. 
-In ogni caso non verrà dato supporto all'installazione da parte del docente e dei TA su macchine personali.**
+In ogni caso non verrà dato supporto all'installazione da parte del docente su macchine personali.**
 
 ### Scaricate il repository ###
 Il repository si trova su github:
 
-    git clone git@github.com:San-Raffaele-AI-Lab/VC_lab_01_aa25-26.git
+    git clone https://github.com/Sapienza-AI-Lab/esercitazione1.git
 
 ### Installate CMake ###
 Seguite le istruzioni che trovate qui:
@@ -21,6 +23,18 @@ Seguite le istruzioni che trovate qui:
     https://cmake.org/install/
 
 ### Compilazione ###
+Potete usare la classica pipeline `cmake` e `make`, oppure lo script
+`compile.sh`. In alternativa potete utilizzare un IDE come CLion per compilare tutto.
+
+Go to the downloaded folder and here are some commands that can help you:
+Per il file `compile.sh`, andate nella cartella del progetto e usate questi comandi:
+
+    ./compile.sh # chiama cmake e make per voi e produce ./test0
+    # questo è quello che vi serve per lavorare. I
+    # n aggiunta potreste voler usare anche questo comandi:
+    ./clean.sh # cancella tutti i file generati
+    ./compile.sh # compila di nuovo
+
 Per compilare manualmente:
 
     cd build
@@ -30,13 +44,11 @@ Per compilare manualmente:
 
 ### Esecuzione/Test ###
 
-Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da girare si trova nella root principale del progetto.
-Da riga di comando scrivete: 
+Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da girare è 
 
-    ./test0_legacy
+    ./test0
 
-che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. Il sorgente cerca la cartella data, quindi va eseguito
-nella cartella che contiente la sottocartella con i dati. 
+che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
 Di base, senza modifiche, l'output che dovreste avere è questo:
 
     20 tests, 3 passed, 17 failed
@@ -109,11 +121,11 @@ NB: gli unici file che dovranno essere modificati per questo esercizio sono
 L'operazione fondamentale di cui abbiamo bisogno è cambiare i pixel dell'immagine. Un'immagine nel nostro caso è un 
 tensore tridimensionale che rappresenta le componenti di colore che compongono l'immagine:
 
-![RGB format](../figs/rgb.png)
+![RGB format](figs/rgb.png)
 
 Per convenzione l'origine del sistema di coordinate è in alto a sinistra:
 
-![Image coordinate system](../figs/coords.png)
+![Image coordinate system](figs/coords.png)
 
 Nel nostro array i dati dell'immagine sono memorizzati con la sequenza 'canale-altezza-profondità' (`CHW`). Vale a dire,
 il primo pixel è quello del canale 0, riga 0, colonna 0, il secondo è canale 0, riga 0, colonna 1, il terzo canale 0, 
@@ -130,7 +142,7 @@ la funzione che implementerete.
 Anche se l'operatore di accesso `image(1,2,1)` farà il controllo del superamento degli estremi dell'immagine, è più semplice lavorare 
 introducendo una strategia di padding. Ci sono diverse strategie per questo:
 
-![Image padding strategies](../figs/pad.png)
+![Image padding strategies](figs/pad.png)
 
 Useremo la strategia `clamp`, vale a dire che se il programmatore cerca di accedere al pixel in colonna -3, 
 la funzione userà la colonna 0. Se invece cercherà di accedere alla colonna 300 per un'immagine 256x256, la funzione 
@@ -158,7 +170,7 @@ eseguibile simile a `test0` per esplorare le funzioni che via via scriverete. Se
 
 L'immagine del cane senza il canale rosso dovrebbe essere così:
 
-![](../figs/dog_no_red.jpg)
+![](figs/dog_no_red.jpg)
 
 
 ## 2. Copiare le immagini ##
@@ -176,16 +188,16 @@ che la percezione umana compensa alcuni effetti fisici generando una percezione 
 illuminazione generale dell'immagine. 
 Inoltre noi siamo sensibili in maniera differente alle varie lunghezze d'onda, come abbiamo visto a lezione:
 
-![Eye sensitivity to different wavelengths](../figs/sensitivity.png)
+![Eye sensitivity to different wavelengths](figs/sensitivity.png)
 
 Questo fa molta differenza nella pratica. Ad esempio questa colorbar:
 
-![Color bar](../figs/colorbar.png)
+![Color bar](figs/colorbar.png)
 
 Se la trasformiamo in scala di grigi con un approccio naif, usando una media dei canali K = (R+G+B)/3, otteniamo un 
 risultato che non combacia con la nostra percezione di brillantezza dei colori originali:
 
-![Averaging grayscale](../figs/avggray.jpg)
+![Averaging grayscale](figs/avggray.jpg)
 
 Proprio perché esiste questa differenza, è meglio usare una media pesata. Ci sono molti modi di farlo 
 ([gamma compression][1], [relative luminance](https://en.wikipedia.org/wiki/Relative_luminance)), e noi 
@@ -200,7 +212,7 @@ La media pesata è questa:
 Usando questa formula dovrebbe permettere al file di test `test0.cpp` che contiene la funzione `test_grayscale()`
 di dare questo output (`grayscale_result.jpg`):
 
-![Grayscale colorbars](../figs/gray.png)
+![Grayscale colorbars](figs/gray.png)
 
 Voi dovrete implementare questa conversione nella funzione `rgb_to_grayscale` in `process_image.cpp`. 
 Fate in modo che la funzioe ritorni una nuova immagine che sia della stessa dimensione dell'originale, ma con un solo
@@ -225,7 +237,7 @@ di 0.4 (vale a dire 40%) e visualizzate l'immagine risultante:
 Vedrete che l'immagine ha un aspetto strano, le parti chiare sono diventate scure e viceversa. Questo avviene perché i 
 pixel hanno superato il valore 1 e c'è stato overflow:
 
-![Overflow](../figs/overflow.jpg)
+![Overflow](figs/overflow.jpg)
 
 ## 5. "Clamping" dei valori dell'immagine
 
@@ -249,7 +261,7 @@ l'immagine sul posto (senza creare una copia). Fatto questo, salvando il risulta
 
 dovreste vedere questo `clamp_result.jpg`:
 
-![](../figs/fixed.jpg)
+![](figs/fixed.jpg)
 
 ## 6. Conversione da RGB a Hue, Saturation, Value (HSV) ##
 
@@ -257,7 +269,7 @@ Fin'ora abbiamo lavorato solo con lo spazio RGB, ma ci sono altri spazi per desc
 dei più comuni, cioè [Hue, Saturation, and Value (HSV)](https://en.wikipedia.org/wiki/HSL_and_HSV). Da un punto
 di vista geometrico è come trasformare uno spazion cubico in uno cilindrico:
 
-![RGB HSV conversion](../figs/convert.png)
+![RGB HSV conversion](figs/convert.png)
 
 [Hue](https://en.wikipedia.org/wiki/Hue) può essere inteso come il colore di base. 
 [Saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation) è l'intensità del colore confrontata con il bianco 
@@ -266,7 +278,7 @@ di vista geometrico è come trasformare uno spazion cubico in uno cilindrico:
 questa [demo](http://math.hws.edu/graphicsbook/demos/c2/rgb-hsv.html) per avere un'impressione delle differenze tra i due
 spazi. Per una interpretazione geometrica si può fare riferimento a questa figura:
 
-![RGB to HSV geometry](../figs/rgbtohsv.png)
+![RGB to HSV geometry](figs/rgbtohsv.png)
 
 Ci sono molti problemi con questo spazio di colore ([lots of issues](http://poynton.ca/notes/colour_and_gamma/ColorFAQ.html#RTFToC36)).
 Tuttavia è semplice da implementare e ci aiuta a capire questo concetto. 
@@ -294,7 +306,7 @@ In questo caso, si imposta Saturation = 0.
 Infine, per calcolare lo Hue dobbiamo calcolare quanto distante un colore è sulla ruota dei colori. Nel nostro caso
 si rappresenta con un esagono:
 
-![color hex](../figs/hex.png)
+![color hex](figs/hex.png)
 
 Si inizia a contare dal Rosso. Ogni passo sull'esagono conta come una unità di distanza. La distanza tra i punti è misurata
 come il rapporto relativo dei colori secondari. Si può usare la formula seguente ([Wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma)):
@@ -345,7 +357,7 @@ In `test.c` converte un immagine HSV, aumenta la saturazione, e poi la ritrasfor
     hsv_to_rgb(im2);
     im2.save_image("output/colorspace_result");
 
-![Saturated dog picture](../figs/dog_saturated.jpg)
+![Saturated dog picture](figs/dog_saturated.jpg)
 
 Notate che ci sono alcuni piccoli artefatti perché cerchiamo di aumentare la saturazione in aree che hanno poco colore. 
 Invece di fare lo shift è meglio moltiplicare il valore per ottenere un risultato più uniforme.
@@ -364,7 +376,7 @@ migliore:
     hsv_to_rgb(im);
     im.save_image("output/dog_scale_saturated");
 
-![Dog saturated smoother](../figs/dog_scale_saturated.jpg)
+![Dog saturated smoother](figs/dog_scale_saturated.jpg)
 
 [//]: # (## 9. Conversione a LUV e viceversa ##)
 
