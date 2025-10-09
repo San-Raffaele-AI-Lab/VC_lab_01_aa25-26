@@ -5,6 +5,7 @@ project(VC_lab_01_aa25-26 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_library(srimg++ SHARED # stands for "San Raffaele Image Library ++"
      src/utils.cpp
@@ -18,7 +19,7 @@ add_library(srimg++ SHARED # stands for "San Raffaele Image Library ++"
      src/process_image.cpp   # file to submit
      )
 
-target_compile_features(srimg++ PUBLIC cxx_std_20)
+# target_compile_features(srimg++ PUBLIC cxx_std_20)
 
 add_executable(test0 src/test/test0.cpp)
 target_link_libraries(test0 PRIVATE srimg++)

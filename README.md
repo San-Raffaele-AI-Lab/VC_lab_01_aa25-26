@@ -51,11 +51,11 @@ Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da 
 che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
 Di base, senza modifiche, l'output che dovreste avere è questo:
 
-    20 tests, 3 passed, 17 failed
+    19 tests, 8 passed, 11 failed
 
 Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
-    20 tests, 20 passed, 0 failed
+    19 tests, 19 passed, 0 failed
 
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
 Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
@@ -181,10 +181,16 @@ L'immagine del cane senza il canale rosso dovrebbe essere così:
 ## 2. Copiare le immagini ##
 
 Qualche volta avrete il bisogno di copiare una immagine. Per farlo dovete creare una nuova immagine della stessa 
-dimensione e travasare i dati. Lo potete fare assegnando sistematicamente un pixel da una immagine all'altra usando 
-dei cicli, o usando la funzione di libreria `std::copy`.
+dimensione e travasare i dati. In C questo vi richiederebbe di allocare della memoria nella nuova immagine e trasferire i dati.
+In quel caso, spesso il modo più veloce è utilizzare `memcopy()` della libreria standard dello C. 
+In C++ potreste pensare id usare la funzione di libreria `std::copy`, tuttavia non è necessario. 
 
-Ora implementate la funzione `void copy_image(Image& to, const Image& from)` contenuta in `src/access_image.cpp`.
+Infatti **avendo implementato il campo `data` della classe Image con un std::vector, il costruttore di copie e 
+l'operatore assegnamento di default hanno già il comportamento che vorremmo!** In pratica quando creiamo una copia o 
+assegniamo un imagine ad un altra, il vettore di dati verrà copiato (deep copy). Questo è un effetto della _Rule of Five_ e
+del principio RAII. 
+
+Questa parte dell'esercitazione non ha nessun compito implementativo, richiede solo di riflettere su questo aspetto. 
 
 ## 3. Immagini in scala di grigi ##
 

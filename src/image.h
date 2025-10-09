@@ -24,7 +24,6 @@ class Image;
 // These are just helper function that allow the Image struct to function properly
 // You are going to implement them in image_access.cpp
 
-// void copy_image(Image& to, const Image& from); // copy helper
 int pixel_address(const Image& im, int x, int y, int ch);  // access helper
 float get_clamped_pixel(const Image& im, int x, int y, int ch); // access with clamping
 void set_pixel(Image& im, int x, int y, int c, float value); // setting only in-bounds
@@ -51,7 +50,6 @@ class Image
       Image& operator=(Image&& other) noexcept = default;
       ~Image() = default;
 
-      
       // pixel access
       float& operator()(int x, int y, int ch)
         {

@@ -8,22 +8,21 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 
 add_library(uwimg++ SHARED
-     src/utils.cpp
-     src/utils.h
-     src/image.h
-     src/load_image.cpp
-     src/stb_image.h
-     src/stb_image_write.h
-     
-     src/access_image.cpp    # file to submit
-     src/process_image.cpp   # file to submit
+        legacy/utils.cpp
+        legacy/utils.h
+        legacy/image.h
+        legacy/load_image.cpp
+        legacy/stb_image.h
+        legacy/stb_image_write.h
+
+        legacy/access_image.cpp    # file to submit
+        legacy/process_image.cpp   # file to submit
      
      
      )
 
 
 link_libraries(uwimg++ m stdc++)
-
 
 add_executable(test0_legacy src/test/test0.cpp)
 
