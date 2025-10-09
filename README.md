@@ -4,18 +4,19 @@ and was subsequentally updated and expanded in the AI-Lab course at Sapienza Uni
 The current incarnation (for the course _Visione Computazionale_ at San Raffaele University) brings other updates, 
 in particular the convertion to a newer C++ standard.
 
-# Esercitazione 1 di AI-Lab #
+# Esercitazione 1 di Visione Computazionale e Sistemi Cognitivi #
 
 ## Setup generale ##
-Questo è il setup da seguire per impostare il repo sulla vostra macchina personale. 
+Questo è il setup da seguire per impostare il repo sulla vostra macchina personale.
+Più sotto trovate le istruzioni per impostarlo sulla macchina virtuale di laboratorio.
 
-**NB: è noevolmente più semplice impostare tutti i tool e le librerie necessarie su una distribuzione linux. 
-In ogni caso non verrà dato supporto all'installazione da parte del docente su macchine personali.**
+**NB: è noevolmente più semplice impostare tutti i tool e le librerie necessarie su una distribuzione linux.
+In ogni caso non verrà dato supporto all'installazione da parte del docente e dei TA su macchine personali.**
 
 ### Scaricate il repository ###
 Il repository si trova su github:
 
-    git clone https://github.com/Sapienza-AI-Lab/esercitazione1.git
+    git clone git@github.com:San-Raffaele-AI-Lab/VC_lab_01_aa25-26.git
 
 ### Installate CMake ###
 Seguite le istruzioni che trovate qui:
