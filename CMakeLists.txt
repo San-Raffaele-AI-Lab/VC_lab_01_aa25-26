@@ -6,43 +6,53 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(SNITCH_DEFINE_MAIN OFF)
+
+# Add snitch test framework to the project
+include(FetchContent)
+
+FetchContent_Declare(snitch
+        GIT_REPOSITORY https://github.com/snitch-org/snitch.git
+        GIT_TAG v1.3.2) # update version number as needed
+FetchContent_MakeAvailable(snitch)
 
 add_library(srimg++ SHARED # stands for "San Raffaele Image Library ++"
-     src/utils.cpp
-     src/utils.h
-     src/image.h
-     src/load_image.cpp
-     src/stb_image.h
-     src/stb_image_write.h
-     
-     src/access_image.cpp    # file to submit
-     src/process_image.cpp   # file to submit
-     )
+        src/utils.cpp
+        src/utils.h
+        src/image.h
+        src/load_image.cpp
+        src/stb_image.h
+        src/stb_image_write.h
+
+        src/access_image.cpp    # file to submit
+        src/process_image.cpp   # file to submit
+        src/test/test0_legacy.hpp
+)
 
 # target_compile_features(srimg++ PUBLIC cxx_std_20)
 
 add_executable(test0 src/test/test0.cpp)
-target_link_libraries(test0 PRIVATE srimg++)
+target_link_libraries(test0 PRIVATE srimg++ snitch::snitch)
 
 # --- Legacy C++11 Target Configuration ---
 # This section compiles the original code from the 'legacy/src' directory.
 
 # Create the legacy library target (note the different name to avoid conflicts)
 add_library(uwimg++
-    legacy/src/access_image.cpp
-    legacy/src/image.h
-    legacy/src/load_image.cpp
-    legacy/src/process_image.cpp
-    legacy/src/stb_image.h
-    legacy/src/stb_image_write.h
-    legacy/src/utils.cpp
-    legacy/src/utils.h
+        legacy/src/access_image.cpp
+        legacy/src/image.h
+        legacy/src/load_image.cpp
+        legacy/src/process_image.cpp
+        legacy/src/stb_image.h
+        legacy/src/stb_image_write.h
+        legacy/src/utils.cpp
+        legacy/src/utils.h
 )
 
 # Set the C++ standard for the legacy library to C++11
 set_target_properties(uwimg++ PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
+        CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED ON
 )
 
 # Create the legacy executable (note the different name)
