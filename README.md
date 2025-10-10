@@ -63,7 +63,7 @@ che sono passati, o falliti. Questo è quello che dovreste leggere alla fine:
 Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
     ==========================================
-    All test passed (8 out of 8 test cases, 29 assertions, 5.883436e-01 seconds)
+    success: all tests passed (8 test cases, 29 assertions, 1.012720e+00 seconds)
 
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
 _Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni._  
