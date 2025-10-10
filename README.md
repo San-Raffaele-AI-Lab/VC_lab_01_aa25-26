@@ -49,17 +49,24 @@ Ogni volta che fate dei cambiamenti al codice dovete compilare. Il programma da 
 
     ./test0
 
-che praticamente esegue dei test sui metodi delle classi che l'esercitazione prevede di implementare. 
-Di base, senza modifiche, l'output che dovreste avere è questo:
+Il framwork per il test assistito è [snitch](https://github.com/snitch-org/snitch). Questo viene installato automaticamente
+tramite `cmake`. Normalmente snitch creerebbe un file di main automatico per girare i test, ma questa opzione è stata 
+disabilitata in questo progetto, per poter mostrare come viene gestito il main. 
 
-    19 tests, 8 passed, 11 failed
+Girando il codice senza modifiche, dovreste vedere l'esecuzione dei test e avere la lista dei vari check
+che sono passati, o falliti. Questo è quello che dovreste leggere alla fine:
+
+
+    ==========================================
+    error: some tests failed (6 out of 8 test cases, 29 assertions, 5.883436e-01 seconds)
 
 Una volta che l'esercitazione sia completata con successo, dovreste avere questo output:
 
-    19 tests, 19 passed, 0 failed
+    ==========================================
+    All test passed (8 out of 8 test cases, 29 assertions, 5.883436e-01 seconds)
 
 Il fatto che il vostro codice superi tutti i test è un buon segno, ma non assicura che sia totalmente corretto. 
-Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni.  
+_Potete aggiungere altri test per rendere più robuste, o efficienti, le vostre implementazioni._  
 
 ## La classe 'Image' ##
 

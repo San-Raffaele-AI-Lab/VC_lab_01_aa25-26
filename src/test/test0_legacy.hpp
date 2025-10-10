@@ -68,11 +68,9 @@ void test_shift() {
     Image c = im;
     shift_image(c, 1, .1);
     TEST(within_eps(im.data[0], c.data[0]) && (&im != &c));
-    // fixme this passes because c and im are the same object without the copy constructor
     TEST(within_eps(im.data[im.w*im.h+13] + .1, c.data[im.w*im.h + 13]));
     TEST(within_eps(im.data[2*im.w*im.h+72], c.data[2*im.w*im.h + 72]));
     TEST(within_eps(im.data[im.w*im.h+47] + .1, c.data[im.w*im.h + 47]));
-    // fixme this passes because c and im are the same object without the copy constructor
 }
 
 void test_scale() {
