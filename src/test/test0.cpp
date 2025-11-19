@@ -96,9 +96,15 @@ TEST_CASE("Test grayscale conversion", "[grayscale]") {
     Image gray = rgb_to_grayscale(im);
     Image g = load_image("data/gray.png");
     CHECK(same_image(gray, g));
+    // just showing that the process is not invertible
+    Image im2 = grayscale_to_rgb(gray, 0.299, 0.587, 0.114);
+    Image im3 = grayscale_to_rgb(gray, 1, 1, 1);
+    save_png(im2, "output/grayscale_to_color_1");
+    save_png(im3, "output/grayscale_to_color_2");
     std::cout << std::endl;
 }
 
+// This test is kept for reference. Copy is automatically handled by constructors and std::vector behavior
 TEST_CASE("Test image copy", "[copy]") {
     Image im = load_image("data/dog.jpg");
     Image c = im;

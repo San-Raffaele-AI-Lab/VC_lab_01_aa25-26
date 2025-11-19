@@ -15,7 +15,6 @@ Image rgb_to_grayscale(const Image &im) {
     assert(im.c == 3); // only accept RGB images
     Image gray(im.w, im.h, 1); // create a new grayscale image (note: 1 channel)
 
-    // TODO: optimize
     for (int i = 0; i < im.w; ++i) {
         for (int j = 0; j < im.h; ++j) {
             gray(i, j, 0) = 0.299 * im(i, j, 0) + 0.587 * im(i, j, 1) + 0.114 * im(i, j, 2);
@@ -27,7 +26,8 @@ Image rgb_to_grayscale(const Image &im) {
 }
 
 
-// Example function that changes the color of a grayscale image
+// Example function that changes the color of a grayscale image, jut to show that the process is not invertible withoug
+// semantic information
 Image grayscale_to_rgb(const Image &im, float r, float g, float b) {
     assert(im.c == 1);
     Image rgb(im.w, im.h, 3);
@@ -50,7 +50,7 @@ Image grayscale_to_rgb(const Image &im, float r, float g, float b) {
 void shift_image(Image &im, int c, float v) {
     assert(c >= 0 && c < im.c); // needs to be a valid channel
 
-    // TODO: shift all the pixels at the specified channel
+    // shifts all the pixels at the specified channel
     int ch_size = im.w*im.h;
     for (int i = 0; i < im.w; ++i) {
         for (int j = 0; j < im.h; ++j) {
@@ -68,7 +68,7 @@ void shift_image(Image &im, int c, float v) {
 void scale_image(Image &im, int c, float v) {
     assert(c >= 0 && c < im.c); // needs to be a valid channel
 
-    // TODO: scale all the pixels at the specified channel
+    // scales all the pixels at the specified channel
     int ch_size = im.w*im.h;
     for (int i = 0; i < im.w; ++i) {
         for (int j = 0; j < im.h; ++j) {
@@ -82,7 +82,7 @@ void scale_image(Image &im, int c, float v) {
 // HW0 #5
 // Image& im: input image to be modified in-place
 void clamp_image(Image &im) {
-    // TODO: clamp all the pixels in all channel to be between 0 and 1
+    // clamps all the pixels in all channel to be between 0 and 1
     for (int k = 0; k < im.c; ++k) {
         for (int i = 0; i < im.w; ++i) {
             for (int j = 0; j < im.h; ++j) {
@@ -114,7 +114,7 @@ float min(float a, float b, float c) {
 void rgb_to_hsv(Image &im) {
     assert(im.c == 3 && "only works for 3-channels images");
 
-    // TODO: Convert all pixels from RGB format to HSV format
+    // Converts all pixels from RGB format to HSV format
     float V, S, H;
     float m, C;
     float RGB[3];
@@ -172,7 +172,7 @@ void rgb_to_hsv(Image &im) {
 void hsv_to_rgb(Image &im) {
     assert(im.c == 3 && "only works for 3-channels images");
 
-    // TODO: Convert all pixels from HSV format to RGB format
+    // Converts all pixels from HSV format to RGB format
     float H, S, V;
     float C, X, m;
     float R, G, B;
